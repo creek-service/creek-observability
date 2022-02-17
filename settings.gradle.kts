@@ -1,5 +1,7 @@
-rootProject.name = "multi-module-template" // ChangeMe: set the root project name with the module name.
+rootProject.name = "creek-observability"
 
 include(
-    "example"
+    "logging"
 )
+
+// Todo(ac): More info into the main readme?
