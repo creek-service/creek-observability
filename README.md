@@ -4,4 +4,9 @@
 
 # Creek Observability
 
-Libraries to help with observing events within Creek.
+Libraries to help with observing running services.
+
+The repo contains the following repos:
+
+* [logging](logging): handles the logging of events via Slf4J.
+
