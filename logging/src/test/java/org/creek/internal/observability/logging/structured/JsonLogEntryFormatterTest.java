@@ -20,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThrows;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.DoubleAdder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.SetSystemProperty;
@@ -104,7 +104,12 @@ class JsonLogEntryFormatterTest {
 
     @Test
     void shouldFormatOtherDoubleNumber() {
-        assertThat(formatter.format(new AtomicDouble(DOUBLE)), is("1.7976931348623157E308"));
+        // Given:
+        final DoubleAdder val = new DoubleAdder();
+        val.add(DOUBLE);
+
+        // Then:
+        assertThat(formatter.format(val), is("1.7976931348623157E308"));
     }
 
     @Test
