@@ -24,10 +24,9 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
+import com.google.common.testing.EqualsTester;
 import java.util.Map;
 import java.util.Optional;
-
-import com.google.common.testing.EqualsTester;
 import org.creek.api.observability.logging.structured.Level;
 import org.junit.jupiter.api.Test;
 
@@ -41,17 +40,10 @@ class TestStructuredLoggerTest {
         new EqualsTester()
                 .addEqualityGroup(
                         logEntry(Level.INFO, Map.of("k", "v"), Optional.of(T)),
-                        logEntry(Level.INFO, Map.of("k", "v"), Optional.of(T))
-                )
-                .addEqualityGroup(
-                        logEntry(Level.ERROR, Map.of("k", "v"), Optional.of(T))
-                )
-                .addEqualityGroup(
-                        logEntry(Level.INFO, Map.of(), Optional.of(T))
-                )
-                .addEqualityGroup(
-                        logEntry(Level.INFO, Map.of("k", "v"), Optional.empty())
-                )
+                        logEntry(Level.INFO, Map.of("k", "v"), Optional.of(T)))
+                .addEqualityGroup(logEntry(Level.ERROR, Map.of("k", "v"), Optional.of(T)))
+                .addEqualityGroup(logEntry(Level.INFO, Map.of(), Optional.of(T)))
+                .addEqualityGroup(logEntry(Level.INFO, Map.of("k", "v"), Optional.empty()))
                 .testEquals();
     }
 
@@ -84,7 +76,9 @@ class TestStructuredLoggerTest {
         // Then:
         assertThat(logger.entries(), hasSize(1));
         assertThat(logger.entries().get(0).level(), is(Level.INFO));
-        assertThat(logger.entries().get(0).message(), is(Map.of("message", "message-text", "ns", Map.of("k", "v"))));
+        assertThat(
+                logger.entries().get(0).message(),
+                is(Map.of("message", "message-text", "ns", Map.of("k", "v"))));
         assertThat(logger.entries().get(0).throwable(), is(Optional.of(T)));
     }
 
