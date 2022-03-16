@@ -26,3 +26,7 @@ val spotBugsVersion : String by extra
 dependencies {
     api(project(":logging"))
 }
+
+tasks.jar {
+    archiveClassifier.set("test-fixtures")
+}
