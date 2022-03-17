@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.creek.api.observability.logging.structured.LogEntryCustomizer;
 
-final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
+public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
 
     private enum Field {
         message
@@ -35,7 +35,7 @@ final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
     private final Map<String, DefaultLogEntryCustomizer> namespaces = new HashMap<>();
     private final Throwable[] throwable;
 
-    static DefaultLogEntryCustomizer create(final String messageText) {
+    public static DefaultLogEntryCustomizer create(final String messageText) {
         return (DefaultLogEntryCustomizer)
                 new DefaultLogEntryCustomizer(new Throwable[1]).with(Field.message, messageText);
     }
@@ -81,14 +81,14 @@ final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
         return this;
     }
 
-    Map<String, Object> build() {
+    public Map<String, Object> build() {
         final Map<String, Object> result = new HashMap<>(metrics);
         namespaces.forEach((name, customizer) -> result.put(name, customizer.build()));
         removeNullValues(result);
         return result.isEmpty() ? null : result;
     }
 
-    Optional<Throwable> throwable() {
+    public Optional<Throwable> throwable() {
         return Optional.ofNullable(throwable[0]);
     }
 

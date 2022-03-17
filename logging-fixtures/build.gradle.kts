@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+plugins {
+    `java-library`
+}
 
-include(
-    "logging",
-    "logging-fixtures"
-)
+val creekVersion : String by extra
+val slf4jVersion : String by extra
+val jacksonVersion : String by extra
+val spotBugsVersion : String by extra
 
+dependencies {
+    api(project(":logging"))
+}
+
+tasks.jar {
+    archiveBaseName.set("${rootProject.name}-logging")
+    archiveClassifier.set("test-fixtures")
+}
