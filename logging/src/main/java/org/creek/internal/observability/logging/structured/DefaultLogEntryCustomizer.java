@@ -27,7 +27,7 @@ import org.creek.api.observability.logging.structured.LogEntryCustomizer;
 
 public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
 
-    private enum Field {
+    public enum Field {
         message
     }
 

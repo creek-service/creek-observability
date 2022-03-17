@@ -16,7 +16,7 @@
 
 package org.creek.test.observability.logging.structured;
 
-import static org.creek.test.observability.logging.structured.TestStructuredLogger.LogEntry.logEntry;
+import static org.creek.test.observability.logging.structured.LogEntry.logEntry;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
@@ -24,34 +24,24 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
-import com.google.common.testing.EqualsTester;
 import java.util.Map;
 import java.util.Optional;
 import org.creek.api.observability.logging.structured.Level;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TestStructuredLoggerTest {
 
-    private static final Throwable T = mock(Throwable.class);
+    private static final Throwable T = mock(Throwable.class, "ExceptionText");
+    private TestStructuredLogger logger;
 
-    @SuppressWarnings("UnstableApiUsage")
-    @Test
-    void shouldImplementHashCodeAndEquals() {
-        new EqualsTester()
-                .addEqualityGroup(
-                        logEntry(Level.INFO, Map.of("k", "v"), Optional.of(T)),
-                        logEntry(Level.INFO, Map.of("k", "v"), Optional.of(T)))
-                .addEqualityGroup(logEntry(Level.ERROR, Map.of("k", "v"), Optional.of(T)))
-                .addEqualityGroup(logEntry(Level.INFO, Map.of(), Optional.of(T)))
-                .addEqualityGroup(logEntry(Level.INFO, Map.of("k", "v"), Optional.empty()))
-                .testEquals();
+    @BeforeEach
+    void setUp() {
+        logger = TestStructuredLogger.create();
     }
 
     @Test
     void shouldCaptureLogs() {
-        // Given:
-        final TestStructuredLogger logger = TestStructuredLogger.create();
-
         // When:
         logger.trace("message-text", log -> log.ns("ns").with("k", "v").withThrowable(T));
 
@@ -79,7 +69,7 @@ class TestStructuredLoggerTest {
         assertThat(
                 logger.entries().get(0).message(),
                 is(Map.of("message", "message-text", "ns", Map.of("k", "v"))));
-        assertThat(logger.entries().get(0).throwable(), is(Optional.of(T)));
+        assertThat(logger.entries().get(0).cause(), is(Optional.of(T)));
     }
 
     @Test
@@ -97,7 +87,6 @@ class TestStructuredLoggerTest {
     @Test
     void shouldAllowEntriesToBeCleared() {
         // Given:
-        final TestStructuredLogger logger = TestStructuredLogger.create();
         logger.trace("message-text", log -> log.ns("ns").with("k", "v").withThrowable(T));
 
         // When:
@@ -105,5 +94,15 @@ class TestStructuredLoggerTest {
 
         // Then:
         assertThat(logger.entries(), is(empty()));
+    }
+
+    @Test
+    void shouldExposeTextEntries() {
+        // Given:
+        logger.trace("message-text", log -> log.with("k", "v").withThrowable(T));
+
+        // When:
+        assertThat(
+                logger.textEntries(), contains("TRACE: {k=v, message=message-text} ExceptionText"));
     }
 }
