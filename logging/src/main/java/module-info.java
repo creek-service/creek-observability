@@ -4,5 +4,5 @@ module creek.observability.logging {
 
     exports org.creek.api.observability.logging.structured;
     exports org.creek.internal.observability.logging.structured to
-            creek.observability.logging.test;
+            creek.observability.logging.fixtures;
 }

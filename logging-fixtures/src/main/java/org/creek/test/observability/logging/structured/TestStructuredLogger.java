@@ -18,13 +18,12 @@ package org.creek.test.observability.logging.structured;
 
 import static java.util.Objects.requireNonNull;
 import static org.creek.api.observability.logging.structured.Level.TRACE;
+import static org.creek.test.observability.logging.structured.LogEntry.logEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import org.creek.api.observability.logging.structured.Level;
 import org.creek.api.observability.logging.structured.LogEntryCustomizer;
 import org.creek.api.observability.logging.structured.StructuredLogger;
@@ -59,77 +58,14 @@ public final class TestStructuredLogger implements StructuredLogger {
         final DefaultLogEntryCustomizer customizer = DefaultLogEntryCustomizer.create(message);
         customizeConsumer.accept(customizer);
 
-        entries.add(new LogEntry(level, customizer.build(), customizer.throwable()));
+        entries.add(logEntry(level, customizer.build(), customizer.throwable()));
     }
 
     public List<LogEntry> entries() {
         return entries;
     }
 
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public static final class LogEntry {
-
-        private final Level level;
-        private final Map<String, Object> message;
-        private final Optional<Throwable> throwable;
-
-        public static LogEntry logEntry(
-                final Level level,
-                final Map<String, Object> message,
-                final Optional<Throwable> throwable) {
-            return new LogEntry(level, message, throwable);
-        }
-
-        private LogEntry(
-                final Level level,
-                final Map<String, Object> message,
-                final Optional<Throwable> throwable) {
-            this.level = requireNonNull(level, "level");
-            this.message = requireNonNull(message, "message");
-            this.throwable = requireNonNull(throwable, "throwable");
-        }
-
-        public Level level() {
-            return level;
-        }
-
-        public Map<String, ?> message() {
-            return message;
-        }
-
-        public Optional<Throwable> throwable() {
-            return throwable;
-        }
-
-        @Override
-        public boolean equals(final Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            final LogEntry logEntry = (LogEntry) o;
-            return level == logEntry.level
-                    && Objects.equals(message, logEntry.message)
-                    && Objects.equals(throwable, logEntry.throwable);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(level, message, throwable);
-        }
-
-        @Override
-        public String toString() {
-            return "LogEntry{"
-                    + "level="
-                    + level
-                    + ", message="
-                    + message
-                    + ", throwable="
-                    + throwable
-                    + '}';
-        }
+    public List<String> textEntries() {
+        return entries.stream().map(LogEntry::toString).collect(Collectors.toUnmodifiableList());
     }
 }

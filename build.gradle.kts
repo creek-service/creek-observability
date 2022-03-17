@@ -178,6 +178,8 @@ subprojects {
                 pom {
                     url.set("https://github.com/creek-service/${rootProject.name}.git")
                 }
+
+                suppressPomMetadataWarningsFor("runtimeElements")
             }
         }
     }

@@ -26,8 +26,3 @@ val spotBugsVersion : String by extra
 dependencies {
     api(project(":logging"))
 }
-
-tasks.jar {
-    archiveBaseName.set("${rootProject.name}-logging")
-    archiveClassifier.set("test-fixtures")
-}
