@@ -18,6 +18,6 @@ rootProject.name = "creek-observability"
 
 include(
     "logging",
-    "logging-test"
+    "logging-fixtures"
 )
 

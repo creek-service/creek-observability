@@ -28,5 +28,6 @@ dependencies {
 }
 
 tasks.jar {
+    archiveBaseName.set("${rootProject.name}-logging")
     archiveClassifier.set("test-fixtures")
 }
