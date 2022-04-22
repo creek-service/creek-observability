@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.creek.test.observability.logging.structured;
+package org.creek.api.test.observability.logging.structured;
 
 import static java.util.Objects.requireNonNull;
 
@@ -74,8 +74,7 @@ public final class LogEntry {
                                 Collectors.toMap(
                                         e -> String.valueOf(e.getKey()),
                                         Map.Entry::getValue,
-                                        (v0, v1) -> v0,
-                                        TreeMap::new));
+                                        (v0, v1) -> v0));
         return new LogEntry(level, converted, cause);
     }
 
@@ -91,7 +90,7 @@ public final class LogEntry {
     }
 
     public Map<String, ?> message() {
-        return message;
+        return new TreeMap<>(message);
     }
 
     public Optional<Throwable> cause() {
