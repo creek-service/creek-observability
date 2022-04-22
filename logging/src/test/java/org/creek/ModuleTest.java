@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-plugins {
-    `java-library`
-}
+package org.creek;
 
-dependencies {
-    api(project(":logging"))
+
+import org.creek.api.test.conformity.ConformityTester;
+import org.junit.jupiter.api.Test;
+
+class ModuleTest {
+
+    @Test
+    void shouldConform() {
+        ConformityTester.test(ModuleTest.class);
+    }
 }

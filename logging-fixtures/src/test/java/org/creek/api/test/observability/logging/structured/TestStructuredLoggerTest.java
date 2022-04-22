@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.creek.test.observability.logging.structured;
+package org.creek.api.test.observability.logging.structured;
 
-import static org.creek.test.observability.logging.structured.LogEntry.logEntry;
+import static org.creek.api.test.observability.logging.structured.LogEntry.logEntry;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
@@ -90,7 +90,7 @@ class TestStructuredLoggerTest {
         logger.trace("message-text", log -> log.ns("ns").with("k", "v").withThrowable(T));
 
         // When:
-        logger.entries().clear();
+        logger.clear();
 
         // Then:
         assertThat(logger.entries(), is(empty()));

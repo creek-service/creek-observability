@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.creek.test.observability.logging.structured;
+package org.creek.api.test.observability.logging.structured;
 
 import static java.util.Objects.requireNonNull;
 import static org.creek.api.observability.logging.structured.Level.TRACE;
-import static org.creek.test.observability.logging.structured.LogEntry.logEntry;
+import static org.creek.api.test.observability.logging.structured.LogEntry.logEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +62,14 @@ public final class TestStructuredLogger implements StructuredLogger {
     }
 
     public List<LogEntry> entries() {
-        return entries;
+        return List.copyOf(entries);
     }
 
     public List<String> textEntries() {
         return entries.stream().map(LogEntry::toString).collect(Collectors.toUnmodifiableList());
+    }
+
+    public void clear() {
+        entries.clear();
     }
 }
