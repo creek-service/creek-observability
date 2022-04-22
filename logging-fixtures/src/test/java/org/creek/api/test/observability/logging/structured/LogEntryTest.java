@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.creek.test.observability.logging.structured;
+package org.creek.api.test.observability.logging.structured;
 
-import static org.creek.test.observability.logging.structured.LogEntry.logEntry;
+import static org.creek.api.test.observability.logging.structured.LogEntry.logEntry;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
