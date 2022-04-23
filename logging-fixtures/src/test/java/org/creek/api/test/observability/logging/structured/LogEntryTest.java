@@ -31,7 +31,6 @@ class LogEntryTest {
 
     private static final Throwable T = mock(Throwable.class, "Exception-text");
 
-    @SuppressWarnings("UnstableApiUsage")
     @Test
     void shouldImplementHashCodeAndEquals() {
         new EqualsTester()
@@ -65,6 +64,7 @@ class LogEntryTest {
 
         // Then:
         assertThat(entry.message().toString(), is("{a=0, message=msg, z=1}"));
+        assertThat(entry.toString(), is("INFO: {a=0, message=msg, z=1}"));
     }
 
     @Test

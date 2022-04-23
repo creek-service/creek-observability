@@ -74,7 +74,8 @@ public final class LogEntry {
                                 Collectors.toMap(
                                         e -> String.valueOf(e.getKey()),
                                         Map.Entry::getValue,
-                                        (v0, v1) -> v0));
+                                        (v0, v1) -> v0,
+                                        TreeMap::new));
         return new LogEntry(level, converted, cause);
     }
 
