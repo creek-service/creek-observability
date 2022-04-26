@@ -74,7 +74,7 @@ subprojects {
         set("jacksonVersion", "2.13.2")         // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
         set("guavaVersion", "31.1-jre")         // https://mvnrepository.com/artifact/com.google.guava/guava
         set("junitVersion", "5.8.2")            // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-        set("junitPioneerVersion", "1.5.0")     // https://mvnrepository.com/artifact/org.junit-pioneer/junit-pioneer
+        set("junitPioneerVersion", "1.7.0")     // https://mvnrepository.com/artifact/org.junit-pioneer/junit-pioneer
         set("mockitoVersion", "4.1.0")          // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
         set("hamcrestVersion", "2.2")           // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core
     }
