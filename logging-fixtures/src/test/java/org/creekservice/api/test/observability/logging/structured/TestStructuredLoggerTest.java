@@ -43,7 +43,7 @@ class TestStructuredLoggerTest {
     @Test
     void shouldCaptureLogs() {
         // When:
-        logger.trace("message-text", log -> log.ns("ns").with("k", "v").withThrowable(T));
+        logger.trace("message-text", log -> log.withThrowable(T).ns("ns").with("k", "v"));
 
         // Then:
         assertThat(

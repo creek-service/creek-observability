@@ -50,6 +50,7 @@ public final class Log4jStructuredLoggerFunctional {
         System.out.println();
         System.out.println();
 
+        someMethod(logger, 1);
         someMethod(logger, 2);
     }
 
