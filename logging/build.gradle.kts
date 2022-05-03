@@ -18,14 +18,14 @@ plugins {
     `java-library`
 }
 
-val creekVersion : String by extra
+val creekBaseVersion : String by extra
 val slf4jVersion : String by extra
 val jacksonVersion : String by extra
 val spotBugsVersion : String by extra
 
 dependencies {
-    implementation("org.creek:creek-base-annotation:$creekVersion")
-    implementation("org.creek:creek-base-type:$creekVersion")
+    implementation("org.creekservice:creek-base-annotation:$creekBaseVersion")
+    implementation("org.creekservice:creek-base-type:$creekBaseVersion")
 
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
 

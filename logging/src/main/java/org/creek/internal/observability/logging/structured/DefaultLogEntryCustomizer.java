@@ -17,7 +17,7 @@
 package org.creek.internal.observability.logging.structured;
 
 import static java.util.Objects.requireNonNull;
-import static org.creek.api.base.type.Preconditions.requireNonBlank;
+import static org.creekservice.api.base.type.Preconditions.requireNonBlank;
 
 import java.util.Collections;
 import java.util.HashMap;

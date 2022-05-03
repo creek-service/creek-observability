@@ -23,15 +23,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import org.creek.api.base.annotation.VisibleForTesting;
-import org.creek.api.base.type.config.SystemProperties;
-import org.creek.api.base.type.json.Json;
+import org.creekservice.api.base.annotation.VisibleForTesting;
+import org.creekservice.api.base.type.config.SystemProperties;
+import org.creekservice.api.base.type.json.Json;
 
 @SuppressWarnings("DuplicatedCode")
 final class JsonLogEntryFormatter implements LogEntryFormatter {
 
     public static final String MAX_DEPTH_PROP =
-            "org.creek.observability.logging.structured.depth.max";
+            "org.creekservice.observability.logging.structured.depth.max";
     @VisibleForTesting static int maxDepth = -1;
     private static final char DOUBLE_QUOTE = '"';
     private static final char COMMA = ',';

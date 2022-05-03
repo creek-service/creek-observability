@@ -21,10 +21,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import org.creek.api.base.annotation.VisibleForTesting;
 import org.creek.api.observability.logging.structured.Level;
 import org.creek.api.observability.logging.structured.LogEntryCustomizer;
 import org.creek.api.observability.logging.structured.StructuredLogger;
+import org.creekservice.api.base.annotation.VisibleForTesting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
