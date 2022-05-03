@@ -27,6 +27,6 @@ jobs:
           ./gradlew markNextVersion -Prelease.incrementer=increment${{ github.event.inputs.part }}
       - name: Trigger Build
         run: |
-          curl -i -d "{\"event_type\": \"publish_new_version\"}" -H "Content-Type: application/json" -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.everest-preview+json" "https://api.github.com/repos/${{ github.repository }}/dispatches"
+          curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_TOKEN}" "https://api.github.com/repos/${{ github.repository }}/actions/workflows/gradle.yml/dispatches" -d '{"ref":"main","inputs":{"publish":"true"}}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TRIGGER_GITHUB_TOKEN }}
