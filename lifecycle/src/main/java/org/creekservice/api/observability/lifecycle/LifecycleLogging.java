@@ -16,19 +16,16 @@
 
 package org.creekservice.api.observability.lifecycle;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+/**
+ * Util class for building standardized lifecycle log messages.
+ *
+ * <p>Useful if you need to extend {@link BasicLifecycle}.
+ */
+public final class LifecycleLogging {
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+    private LifecycleLogging() {}
 
-class BasicLifecycleTest {
-
-    @ParameterizedTest
-    @EnumSource(BasicLifecycle.class)
-    void shouldReturnStandardizedLogMessage(final BasicLifecycle event) {
-        assertThat(
-                event.logMessage(LoggableLifecycle.SERVICE_TYPE),
-                is("creek.lifecycle.service." + event));
+    public static String lifecycleLogMessage(final String targetType, final Enum<?> event) {
+        return "creek.lifecycle." + targetType.toLowerCase() + "." + event.name().toLowerCase();
     }
 }

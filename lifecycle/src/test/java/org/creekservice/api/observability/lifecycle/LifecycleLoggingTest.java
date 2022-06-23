@@ -19,16 +19,19 @@ package org.creekservice.api.observability.lifecycle;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.api.Test;
 
-class BasicLifecycleTest {
+class LifecycleLoggingTest {
 
-    @ParameterizedTest
-    @EnumSource(BasicLifecycle.class)
-    void shouldReturnStandardizedLogMessage(final BasicLifecycle event) {
+    @Test
+    void shouldReturnStandardizedLogMessage() {
         assertThat(
-                event.logMessage(LoggableLifecycle.SERVICE_TYPE),
-                is("creek.lifecycle.service." + event));
+                LifecycleLogging.lifecycleLogMessage(
+                        "WhatEva", TestEnum.SomeThingWickedThisWayComes),
+                is("creek.lifecycle.whateva.somethingwickedthiswaycomes"));
+    }
+
+    private enum TestEnum {
+        SomeThingWickedThisWayComes
     }
 }

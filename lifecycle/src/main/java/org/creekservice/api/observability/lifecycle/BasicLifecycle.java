@@ -24,7 +24,7 @@ package org.creekservice.api.observability.lifecycle;
  * should log to indicate it has started and the Creek system tests, which must wait for the log
  * message to know the service is ready.
  */
-public enum BasicLifecycle implements Lifecycle {
+public enum BasicLifecycle implements LoggableLifecycle {
     starting,
     started,
     stopping,
@@ -32,6 +32,6 @@ public enum BasicLifecycle implements Lifecycle {
 
     @Override
     public String logMessage(final String targetType) {
-        return "creek.lifecycle." + targetType.toLowerCase() + "." + name();
+        return LifecycleLogging.lifecycleLogMessage(targetType, this);
     }
 }

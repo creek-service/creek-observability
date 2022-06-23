@@ -16,7 +16,23 @@
 
 package org.creekservice.api.observability.lifecycle;
 
-public interface Lifecycle {
+/**
+ * A lifecycle that can be logged.
+ *
+ * <p>The main purpose of this type is to provide the common glue between what a service/application
+ * should log to indicate it has started and the Creek system tests, which must wait for the log
+ * message to know the service is ready.
+ *
+ * <p>The system tests look for a log line containing {@code creek.lifecycle.service.started} to
+ * determine a service has started. This can be obtained via from {@link BasicLifecycle} via {@code
+ * BasicLifecycle.started.logMessage(LoggableLifecycle.SERVICE_TYPE)}
+ */
+public interface LoggableLifecycle {
+
+    /**
+     * A common identifier for service instance lifecycle events, as expected by the system tests.
+     */
+    String SERVICE_TYPE = "service";
 
     /**
      * Obtain a standardized log message for the lifecycle event.
