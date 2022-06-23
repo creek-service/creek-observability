@@ -16,22 +16,14 @@
 
 package org.creekservice.api.observability.lifecycle;
 
-/**
- * An enum capturing a basic set of lifecycle events for an instance of <i>something</i>, for
- * example, an application.
- *
- * <p>The main purpose of this type is to provide the common glue between what a service/application
- * should log to indicate it has started and the Creek system tests, which must wait for the log
- * message to know the service is ready.
- */
-public enum BasicLifecycle implements Lifecycle {
-    starting,
-    started,
-    stopping,
-    stopped;
+public interface Lifecycle {
 
-    @Override
-    public String logMessage(final String targetType) {
-        return "creek.lifecycle." + targetType.toLowerCase() + "." + name();
-    }
+    /**
+     * Obtain a standardized log message for the lifecycle event.
+     *
+     * @param targetType the type of the target, i.e. the type of the object that is going through
+     *     the lifecycle, e.g. {@code service}.
+     * @return the standardized message to log.
+     */
+    String logMessage(String targetType);
 }
