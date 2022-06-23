@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+package org.creekservice.api.observability.lifecycle;
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures"
-)
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+
+class BasicLifecycleTest {
+
+    @ParameterizedTest
+    @EnumSource(BasicLifecycle.class)
+    void shouldReturnStandardizedLogMessage(final BasicLifecycle event) {
+        assertThat(event.logMessage("Service"), is("creek.lifecycle.service." + event));
+    }
+}

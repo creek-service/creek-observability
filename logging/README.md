@@ -1,4 +1,4 @@
-# Logging
+# Creek Observability Logging
 
 Wrapper around [Slf4J][1] aimed at encouraging more structured logging.
 

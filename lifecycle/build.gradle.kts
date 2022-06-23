@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+plugins {
+    `java-library`
+}
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures"
-)
+val creekBaseVersion : String by extra
+val slf4jVersion : String by extra
+val jacksonVersion : String by extra
+val spotBugsVersion : String by extra
 
+dependencies {
+}

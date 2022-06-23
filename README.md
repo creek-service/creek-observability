@@ -9,5 +9,7 @@ Libraries to help with observing running services.
 
 The repo contains the following repos:
 
+* [lifecycle](lifecycle): a common model of lifecycle events.
 * [logging](logging): handles the logging of events via Slf4J.
+* [logging fixtures](logging-fixtures): test fixtures for testing logging output.
 
