@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+package org.creekservice;
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures"
-)
 
+import org.creekservice.api.test.conformity.ConformityTester;
+import org.junit.jupiter.api.Test;
+
+class ModuleTest {
+
+    @Test
+    void shouldConform() {
+        ConformityTester.test(ModuleTest.class);
+    }
+}

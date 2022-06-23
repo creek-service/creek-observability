@@ -14,11 +14,24 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+package org.creekservice.api.observability.lifecycle;
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures"
-)
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
+import org.junit.jupiter.api.Test;
+
+class LifecycleLoggingTest {
+
+    @Test
+    void shouldReturnStandardizedLogMessage() {
+        assertThat(
+                LifecycleLogging.lifecycleLogMessage(
+                        "WhatEva", TestEnum.SomeThingWickedThisWayComes),
+                is("creek.lifecycle.whateva.somethingwickedthiswaycomes"));
+    }
+
+    private enum TestEnum {
+        SomeThingWickedThisWayComes
+    }
+}

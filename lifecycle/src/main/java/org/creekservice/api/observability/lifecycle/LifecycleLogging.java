@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+package org.creekservice.api.observability.lifecycle;
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures"
-)
+/**
+ * Util class for building standardized lifecycle log messages.
+ *
+ * <p>Useful if you need to extend {@link BasicLifecycle}.
+ */
+public final class LifecycleLogging {
 
+    private LifecycleLogging() {}
+
+    public static String lifecycleLogMessage(final String targetType, final Enum<?> event) {
+        return "creek.lifecycle." + targetType.toLowerCase() + "." + event.name().toLowerCase();
+    }
+}
