@@ -18,10 +18,5 @@ plugins {
     `java-library`
 }
 
-val creekBaseVersion : String by extra
-val slf4jVersion : String by extra
-val jacksonVersion : String by extra
-val spotBugsVersion : String by extra
-
 dependencies {
 }

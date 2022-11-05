@@ -29,15 +29,32 @@ import org.creekservice.api.observability.logging.structured.LogEntryCustomizer;
 import org.creekservice.api.observability.logging.structured.StructuredLogger;
 import org.creekservice.internal.observability.logging.structured.DefaultLogEntryCustomizer;
 
+/**
+ * A test impl of {@link StructuredLogger}.
+ *
+ * <p>This type can be passed to code expecting a {@link StructuredLogger}. It will capture log
+ * lines, which tests can then assert are as expected.
+ */
 public final class TestStructuredLogger implements StructuredLogger {
 
     private final Level minLevel;
     private final List<LogEntry> entries = new ArrayList<>();
 
+    /**
+     * Factory method
+     *
+     * @return logger
+     */
     public static TestStructuredLogger create() {
         return create(TRACE);
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the minimum log level to capture.
+     * @return logger
+     */
     public static TestStructuredLogger create(final Level level) {
         return new TestStructuredLogger(level);
     }
@@ -61,14 +78,17 @@ public final class TestStructuredLogger implements StructuredLogger {
         entries.add(logEntry(level, customizer.build(), customizer.throwable()));
     }
 
+    /** @return all the captured log entries */
     public List<LogEntry> entries() {
         return List.copyOf(entries);
     }
 
+    /** @return all the captured log entries, formatted as text. */
     public List<String> textEntries() {
         return entries.stream().map(LogEntry::toString).collect(Collectors.toUnmodifiableList());
     }
 
+    /** Clear all captured entries, allowing the instance to be re-used. */
     public void clear() {
         entries.clear();
     }

@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import org.creekservice.api.observability.logging.structured.Level;
 import org.creekservice.internal.observability.logging.structured.DefaultLogEntryCustomizer;
 
+/** A single log entry */
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class LogEntry {
 
@@ -34,20 +35,52 @@ public final class LogEntry {
     private final Map<String, Object> message;
     private final Optional<Throwable> cause;
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the log message
+     * @return the entry
+     */
     public static LogEntry logEntry(final Level level, final String message) {
         return logEntry(level, message, Map.of(), Optional.empty());
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the log message
+     * @param cause the cause
+     * @return the entry
+     */
     public static LogEntry logEntry(
             final Level level, final String message, final Throwable cause) {
         return logEntry(level, message, Map.of(), Optional.of(cause));
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the log message
+     * @param additional additional key-value entries to include
+     * @return the entry
+     */
     public static LogEntry logEntry(
             final Level level, final String message, final Map<?, ?> additional) {
         return logEntry(level, message, additional, Optional.empty());
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the log message
+     * @param additional additional key-value entries to include
+     * @param cause the cause
+     * @return the entry
+     */
     public static LogEntry logEntry(
             final Level level,
             final String message,
@@ -56,6 +89,15 @@ public final class LogEntry {
         return logEntry(level, message, additional, Optional.of(cause));
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the log message
+     * @param additional additional key-value entries to include
+     * @param cause the cause
+     * @return the entry
+     */
     public static LogEntry logEntry(
             final Level level,
             final String message,
@@ -66,6 +108,14 @@ public final class LogEntry {
         return logEntry(level, all, cause);
     }
 
+    /**
+     * Factory method
+     *
+     * @param level the log level
+     * @param message the structured log message
+     * @param cause the cause
+     * @return the entry
+     */
     public static LogEntry logEntry(
             final Level level, final Map<?, ?> message, final Optional<Throwable> cause) {
         final Map<String, Object> converted =
@@ -86,14 +136,17 @@ public final class LogEntry {
         this.cause = requireNonNull(cause, "cause");
     }
 
+    /** @return the log level. */
     public Level level() {
         return level;
     }
 
+    /** @return the structured log message. */
     public Map<String, ?> message() {
         return new TreeMap<>(message);
     }
 
+    /** @return any throwable cause set. */
     public Optional<Throwable> cause() {
         return cause;
     }

@@ -25,6 +25,13 @@ public final class LifecycleLogging {
 
     private LifecycleLogging() {}
 
+    /**
+     * Build a lifecycle log message
+     *
+     * @param targetType the type of thing that the lifecycle pertains to, e.g. a service.
+     * @param event the event that has happened.
+     * @return the log message
+     */
     public static String lifecycleLogMessage(final String targetType, final Enum<?> event) {
         return "creek.lifecycle." + targetType.toLowerCase() + "." + event.name().toLowerCase();
     }

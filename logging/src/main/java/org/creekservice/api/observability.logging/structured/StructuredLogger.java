@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 /** Logger interface that encourages more structured logging. */
 public interface StructuredLogger {
 
+    /** A consumer that does nothing. */
     Consumer<LogEntryCustomizer> NO_OP_CONSUMER = customizer -> {};
 
     /**

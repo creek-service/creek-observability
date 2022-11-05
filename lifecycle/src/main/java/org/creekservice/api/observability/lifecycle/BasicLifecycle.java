@@ -25,9 +25,16 @@ package org.creekservice.api.observability.lifecycle;
  * message to know the service is ready.
  */
 public enum BasicLifecycle implements LoggableLifecycle {
+    /** Instance is starting up. */
     starting,
+
+    /** Instance is running. */
     started,
+
+    /** Instance is stopping. */
     stopping,
+
+    /** Instance is stopped. */
     stopped;
 
     @Override
