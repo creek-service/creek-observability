@@ -16,10 +16,16 @@
 
 package org.creekservice.api.observability.logging.structured;
 
+/** Dependency free log level enumeration. */
 public enum Level {
+    /** Trace log level */
     TRACE,
+    /** Debug log level */
     DEBUG,
+    /** Info log level */
     INFO,
+    /** Warn log level */
     WARN,
+    /** Error log level */
     ERROR
 }

@@ -45,6 +45,10 @@ public final class Slf4jStructuredLogger implements StructuredLogger {
     private final Function<String, DefaultLogEntryCustomizer> customizerFactory;
     private final LogEntryFormatter formatter;
 
+    /**
+     * @param clazz the class doing the logging.
+     * @param rootNs optional root namespace all logs should be under.
+     */
     public Slf4jStructuredLogger(final Class<?> clazz, final Optional<String> rootNs) {
         this(
                 LoggerFactory.getLogger(clazz),

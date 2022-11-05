@@ -20,6 +20,7 @@ package org.creekservice.api.observability.logging.structured;
 import java.util.Optional;
 import org.creekservice.internal.observability.logging.structured.Slf4jStructuredLogger;
 
+/** Factory class for loggers. */
 public final class StructuredLoggerFactory {
 
     private StructuredLoggerFactory() {}

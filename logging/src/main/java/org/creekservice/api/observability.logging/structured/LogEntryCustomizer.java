@@ -38,6 +38,8 @@ public interface LogEntryCustomizer {
     /**
      * Nest the log entry with a namespace
      *
+     * @param namespace the namespace
+     * @return self
      * @see #ns(String)
      */
     default LogEntryCustomizer ns(final Enum<?> namespace) {
@@ -60,6 +62,9 @@ public interface LogEntryCustomizer {
     /**
      * Attach a key-value pair to the log entry.
      *
+     * @param key the entry key
+     * @param value the entry value
+     * @return self
      * @see #with(String, Object)
      */
     default LogEntryCustomizer with(final Enum<?> key, final Object value) {

@@ -1,3 +1,4 @@
+/** Module containing machine friendly logging */
 module creek.observability.logging {
     requires creek.base.type;
     requires org.slf4j;
