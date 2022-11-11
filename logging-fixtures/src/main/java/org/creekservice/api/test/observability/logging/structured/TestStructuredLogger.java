@@ -78,12 +78,16 @@ public final class TestStructuredLogger implements StructuredLogger {
         entries.add(logEntry(level, customizer.build(), customizer.throwable()));
     }
 
-    /** @return all the captured log entries */
+    /**
+     * @return all the captured log entries
+     */
     public List<LogEntry> entries() {
         return List.copyOf(entries);
     }
 
-    /** @return all the captured log entries, formatted as text. */
+    /**
+     * @return all the captured log entries, formatted as text.
+     */
     public List<String> textEntries() {
         return entries.stream().map(LogEntry::toString).collect(Collectors.toUnmodifiableList());
     }

@@ -136,17 +136,23 @@ public final class LogEntry {
         this.cause = requireNonNull(cause, "cause");
     }
 
-    /** @return the log level. */
+    /**
+     * @return the log level.
+     */
     public Level level() {
         return level;
     }
 
-    /** @return the structured log message. */
+    /**
+     * @return the structured log message.
+     */
     public Map<String, ?> message() {
         return new TreeMap<>(message);
     }
 
-    /** @return any throwable cause set. */
+    /**
+     * @return any throwable cause set.
+     */
     public Optional<Throwable> cause() {
         return cause;
     }
