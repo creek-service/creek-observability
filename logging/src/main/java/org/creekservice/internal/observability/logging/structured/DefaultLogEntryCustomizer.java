@@ -102,7 +102,9 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
         return result.isEmpty() ? null : result;
     }
 
-    /** @return any throwable set. */
+    /**
+     * @return any throwable set.
+     */
     public Optional<Throwable> throwable() {
         return Optional.ofNullable(throwable[0]);
     }
