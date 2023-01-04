@@ -16,7 +16,6 @@
 
 package org.creekservice.api.observability.logging.structured;
 
-
 import java.util.function.Consumer;
 
 /** Logger interface that encourages more structured logging. */
