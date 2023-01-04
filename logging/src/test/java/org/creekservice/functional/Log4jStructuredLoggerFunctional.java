@@ -16,7 +16,6 @@
 
 package org.creekservice.functional;
 
-
 import java.time.Duration;
 import java.time.Instant;
 import org.creekservice.api.observability.logging.structured.StructuredLogger;
