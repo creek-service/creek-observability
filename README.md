@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Coverage Status](https://coveralls.io/repos/github/creek-service/creek-observability/badge.svg?branch=main)](https://coveralls.io/github/creek-service/creek-observability?branch=main)
 [![Build](https://github.com/creek-service/creek-observability/actions/workflows/build.yml/badge.svg)](https://github.com/creek-service/creek-observability/actions/workflows/build.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/org.creekservice/creek-observability-logging.svg)](https://search.maven.org/artifact/org.creekservice/creek-observability-logging/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.creekservice/creek-observability-logging.svg)](https://central.sonatype.dev/search?q=creek-observability-*)
 [![CodeQL](https://github.com/creek-service/creek-observability/actions/workflows/codeql.yml/badge.svg)](https://github.com/creek-service/creek-observability/actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/creek-service/creek-observability/badge)](https://api.securityscorecards.dev/projects/github.com/creek-service/creek-observability)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6895/badge)](https://bestpractices.coreinfrastructure.org/projects/6895)
