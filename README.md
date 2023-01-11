@@ -4,7 +4,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.creekservice/creek-observability-logging.svg)](https://central.sonatype.dev/search?q=creek-observability-*)
 [![CodeQL](https://github.com/creek-service/creek-observability/actions/workflows/codeql.yml/badge.svg)](https://github.com/creek-service/creek-observability/actions/workflows/codeql.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/creek-service/creek-observability/badge)](https://api.securityscorecards.dev/projects/github.com/creek-service/creek-observability)
-[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6895/badge)](https://bestpractices.coreinfrastructure.org/projects/6895)
+[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6899/badge)](https://bestpractices.coreinfrastructure.org/projects/6899)
 
 # Creek Observability
 
