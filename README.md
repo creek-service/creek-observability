@@ -10,6 +10,12 @@
 
 Libraries to help with observing running services.
 
+The libraries published by this repository are intended to be used by those writing microservices using Creek.
+Their intent is to provide a logging abstraction on top of [Slf4J][slf4j] that promotes more structured logs.
+Structured logs are more easily ingested, indexed and searched in modern log aggregate, search & visualisation tools, 
+such as [Splunk][splunk], [the ELK stack][elk], etc.  With structured logging, these tools can be leveraged to build
+sophisticated dashboards and alerts of log messages. 
+
 See [CreekService.org](https://www.creekservice.org) for info on Creek Service.
 
 ## Modules
@@ -17,6 +23,9 @@ See [CreekService.org](https://www.creekservice.org) for info on Creek Service.
 The repo contains the following modules:
 
 * [lifecycle](lifecycle): a common model of lifecycle events.
-* [logging](logging): handles the logging of events via Slf4J.
+* [logging](logging): handles the logging of _structured_ events via [Slf4J][slf4j].
 * [logging fixtures](logging-fixtures): test fixtures for testing logging output.
 
+[slf4j]: https://www.slf4j.org
+[splunk]: https://www.splunk.com
+[elk]: https://www.elastic.co/what-is/elk-stack
