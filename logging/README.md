@@ -1,8 +1,9 @@
 # Creek Observability Logging
 
-Wrapper around [Slf4J][1] aimed at encouraging more structured logging.
+Wrapper around [Slf4J][slf4j] aimed at encouraging more structured logging.
 
-More structured logging is more easily ingested by log aggregation and visualization tools, such as Elasticsearch or Splunk.
+More structured logging is more easily ingested by log aggregation and visualization tools, 
+such as [Splunk][splunk], [the ELK stack][elk], etc.
 
 For example, the code snippet below logs events with structured metrics:
 
@@ -41,4 +42,6 @@ Depending on the logging framework used and how it is configured, this might res
 
 The `message` field contains a nested JSON document containing the message and metrics being logged.
 
-[1]: https://www.slf4j.org
+[slf4j]: https://www.slf4j.org
+[splunk]: https://www.splunk.com
+[elk]: https://www.elastic.co/what-is/elk-stack
