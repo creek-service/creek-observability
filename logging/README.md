@@ -1,3 +1,5 @@
+[![javadoc](https://javadoc.io/badge2/org.creekservice/creek-observability-logging/javadoc.svg)](https://javadoc.io/doc/org.creekservice/creek-observability-logging)
+
 # Creek Observability Logging
 
 Wrapper around [Slf4J][slf4j] aimed at encouraging more structured logging.
