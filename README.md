@@ -22,9 +22,9 @@ See [CreekService.org](https://www.creekservice.org) for info on Creek Service.
 
 The repo contains the following modules:
 
-* [lifecycle](lifecycle): a common model of lifecycle events.
-* [logging](logging): handles the logging of _structured_ events via [Slf4J][slf4j].
-* [logging fixtures](logging-fixtures): test fixtures for testing logging output.
+* **[lifecycle](lifecycle)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-lifecycle)]: a common model of lifecycle events.
+* **[logging](logging)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-logging)]: handles the logging of _structured_ events via [Slf4J][slf4j].
+* **[logging fixtures](logging-fixtures)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-logging-fixtures)]: test fixtures for testing logging output.
 
 [slf4j]: https://www.slf4j.org
 [splunk]: https://www.splunk.com
