@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import org.creekservice.api.base.annotation.VisibleForTesting;
 import org.creekservice.api.base.type.config.SystemProperties;
 import org.creekservice.api.base.type.json.Json;
 
@@ -32,7 +31,6 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
 
     public static final String MAX_DEPTH_PROP =
             "org.creekservice.observability.logging.structured.depth.max";
-    @VisibleForTesting static int maxDepth = -1;
     private static final char DOUBLE_QUOTE = '"';
     private static final char COMMA = ',';
     private static final char COLON = ':';
@@ -69,16 +67,18 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
                             Object[].class, JsonLogEntryFormatter::formatObjectArray),
                     new SimpleHandler<>(Object.class, JsonLogEntryFormatter::formatString));
 
+    private int maxDepth = -1;
+
     @Override
     public String format(final Object o) {
         final StringBuilder sb = new StringBuilder();
-        format(sb, o, 0);
+        format(sb, o, 0, maxDepth());
         return sb.toString();
     }
 
-    private static void format(final StringBuilder sb, final Object object, final int depth) {
-
-        if (depth > maxDepth()) {
+    private static void format(
+            final StringBuilder sb, final Object object, final int depth, final int maxDepth) {
+        if (depth > maxDepth) {
             throw new IllegalArgumentException("Max depth of " + maxDepth + " exceeded");
         }
 
@@ -86,7 +86,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
                 .filter(h -> h.handles(object))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new)
-                .handle(sb, object, depth);
+                .handle(sb, object, depth, maxDepth);
     }
 
     private static void formatString(final StringBuilder sb, final Object value) {
@@ -108,7 +108,10 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
     }
 
     private static void formatCollection(
-            final StringBuilder sb, final Collection<?> items, final int depth) {
+            final StringBuilder sb,
+            final Collection<?> items,
+            final int depth,
+            final int maxDepth) {
         sb.append(ARRAY_START);
 
         final boolean[] first = {true};
@@ -119,13 +122,14 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
                     } else {
                         sb.append(COMMA);
                     }
-                    format(sb, item, depth + 1);
+                    format(sb, item, depth + 1, maxDepth);
                 });
 
         sb.append(ARRAY_END);
     }
 
-    private static void formatMap(final StringBuilder sb, final Map<?, ?> map, final int depth) {
+    private static void formatMap(
+            final StringBuilder sb, final Map<?, ?> map, final int depth, final int maxDepth) {
         sb.append(OBJECT_START);
 
         final boolean[] first = {true};
@@ -144,7 +148,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
 
                     appendKeyAndColon(sb, key);
 
-                    format(sb, value, depth + 1);
+                    format(sb, value, depth + 1, maxDepth);
                 });
 
         sb.append(OBJECT_END);
@@ -243,14 +247,14 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
     }
 
     private static void formatObjectArray(
-            final StringBuilder sb, final Object[] items, final int depth) {
+            final StringBuilder sb, final Object[] items, final int depth, final int maxDepth) {
         sb.append(ARRAY_START);
         final int nextDepth = depth + 1;
         for (int i = 0; i < items.length; i++) {
             if (i > 0) {
                 sb.append(COMMA);
             }
-            format(sb, items[i], nextDepth);
+            format(sb, items[i], nextDepth, maxDepth);
         }
         sb.append(ARRAY_END);
     }
@@ -265,7 +269,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         sb.append(DOUBLE_QUOTE).append(COLON);
     }
 
-    private static int maxDepth() {
+    private int maxDepth() {
         if (maxDepth == -1) {
             maxDepth = SystemProperties.getInt(MAX_DEPTH_PROP, 8);
         }
@@ -275,7 +279,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
     private interface Handler {
         boolean handles(Object object);
 
-        void handle(StringBuilder sb, Object object, int depth);
+        void handle(StringBuilder sb, Object object, int depth, int maxDepth);
     }
 
     private static class NullHandler implements Handler {
@@ -285,7 +289,8 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         }
 
         @Override
-        public void handle(final StringBuilder sb, final Object object, final int depth) {
+        public void handle(
+                final StringBuilder sb, final Object object, final int depth, final int maxDepth) {
             sb.append("null");
         }
     }
@@ -306,7 +311,8 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         }
 
         @Override
-        public void handle(final StringBuilder sb, final Object object, final int depth) {
+        public void handle(
+                final StringBuilder sb, final Object object, final int depth, final int maxDepth) {
             final T t = type.cast(object);
             handle.accept(sb, t);
         }
@@ -328,13 +334,14 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         }
 
         @Override
-        public void handle(final StringBuilder sb, final Object object, final int depth) {
+        public void handle(
+                final StringBuilder sb, final Object object, final int depth, final int maxDepth) {
             final T t = type.cast(object);
-            handle.accept(sb, t, depth);
+            handle.accept(sb, t, depth, maxDepth);
         }
 
         private interface HandleFunc<T> {
-            void accept(StringBuilder sb, T object, int depth);
+            void accept(StringBuilder sb, T object, int depth, int maxDepth);
         }
     }
 }
