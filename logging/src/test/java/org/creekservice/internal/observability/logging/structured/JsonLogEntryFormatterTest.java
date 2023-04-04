@@ -20,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThrows;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -45,10 +44,8 @@ class JsonLogEntryFormatterTest {
 
     private JsonLogEntryFormatter formatter;
 
-    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     @BeforeEach
     void setUp() {
-        JsonLogEntryFormatter.maxDepth = -1;
         formatter = new JsonLogEntryFormatter();
     }
 
