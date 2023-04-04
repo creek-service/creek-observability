@@ -67,12 +67,16 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
                             Object[].class, JsonLogEntryFormatter::formatObjectArray),
                     new SimpleHandler<>(Object.class, JsonLogEntryFormatter::formatString));
 
-    private int maxDepth = -1;
+    private final int maxDepth;
+
+    JsonLogEntryFormatter() {
+        this.maxDepth = SystemProperties.getInt(MAX_DEPTH_PROP, 8);
+    }
 
     @Override
     public String format(final Object o) {
         final StringBuilder sb = new StringBuilder();
-        format(sb, o, 0, maxDepth());
+        format(sb, o, 0, maxDepth);
         return sb.toString();
     }
 
@@ -267,13 +271,6 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
 
         Json.escapeJson(sb, keyStartIndex);
         sb.append(DOUBLE_QUOTE).append(COLON);
-    }
-
-    private int maxDepth() {
-        if (maxDepth == -1) {
-            maxDepth = SystemProperties.getInt(MAX_DEPTH_PROP, 8);
-        }
-        return maxDepth;
     }
 
     private interface Handler {
