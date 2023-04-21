@@ -269,6 +269,7 @@ class JsonLogEntryFormatterTest {
         assertThat(e.getMessage(), is("Max depth of 8 exceeded"));
     }
 
+    @SetSystemProperty(key = JsonLogEntryFormatter.MAX_DEPTH_PROP, value = "8")
     @Test
     void shouldNotThrowIfMaxDepthMatched() {
         // Given:
