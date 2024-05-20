@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
  * <p>Given an interface {@code MyListener}, this class can be used to chain multiple listeners
  * together, without the need to write any custom code.
  *
- * <p>
- *
  * <pre>{@code
  * MyListener composite = CompositeObserverBuilder.builder(MyListener.class, listener1)
  *     .observer(listener2)
