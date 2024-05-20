@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-rootProject.name = "creek-observability"
+plugins {
+    `java-library`
+}
 
-include(
-    "lifecycle",
-    "logging",
-    "logging-fixtures",
-    "patterns"
-)
-
+dependencies {
+}

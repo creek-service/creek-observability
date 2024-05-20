@@ -25,6 +25,7 @@ The repo contains the following modules:
 * **[lifecycle](lifecycle)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-lifecycle)]: a common model of lifecycle events.
 * **[logging](logging)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-logging)]: handles the logging of _structured_ events via [Slf4J][slf4j].
 * **[logging fixtures](logging-fixtures)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-logging-fixtures)]: test fixtures for testing logging output.
+* **[patterns](patterns)** [[JavaDocs](https://javadoc.io/doc/org.creekservice/creek-observability-patterns)]: util code and patterns to help with observability
 
 [slf4j]: https://www.slf4j.org
 [splunk]: https://www.splunk.com
