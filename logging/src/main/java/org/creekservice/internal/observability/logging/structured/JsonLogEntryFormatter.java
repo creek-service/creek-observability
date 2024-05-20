@@ -279,7 +279,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         void handle(StringBuilder sb, Object object, int depth, int maxDepth);
     }
 
-    private static class NullHandler implements Handler {
+    private static final class NullHandler implements Handler {
         @Override
         public boolean handles(final Object object) {
             return object == null;
