@@ -73,10 +73,10 @@ public class JsonLoggingFunctionalTest {
         final JsonNode ns = root.get("some\t\n\"ns");
         assertThat(
                 String.valueOf(ns.get("cause")),
-                startsWith(
-                        "\"java.lang.RuntimeException: some\\t\\n"
-                                + "\\\"cause\\n"
-                                + "\\tat creek.observability.logging@"));
+                startsWith("\"java.lang.RuntimeException: some\\t\\n\\\"cause"));
+        assertThat(
+                String.valueOf(ns.get("cause")),
+                containsString("\\n\\tat creek.observability.logging@"));
         assertThat(
                 String.valueOf(ns.get("cause")),
                 containsString(

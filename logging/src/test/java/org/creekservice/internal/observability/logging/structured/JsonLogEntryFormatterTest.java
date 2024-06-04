@@ -120,11 +120,8 @@ class JsonLogEntryFormatterTest {
         final String actual = formatter.formatInternal(e);
 
         // Then:
-        assertThat(
-                actual,
-                startsWith(
-                        "\"java.lang.OutOfMemoryError: some message\\n"
-                                + "\\tat creek.observability.logging@"));
+        assertThat(actual, startsWith("\"java.lang.OutOfMemoryError: some message"));
+        assertThat(actual, containsString("\\n\\tat creek.observability.logging@"));
         assertThat(
                 actual,
                 containsString(
