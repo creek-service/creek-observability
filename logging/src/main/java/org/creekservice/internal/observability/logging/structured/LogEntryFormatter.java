@@ -16,6 +16,22 @@
 
 package org.creekservice.internal.observability.logging.structured;
 
+import java.util.Map;
+
+/** A formatter of log entries. */
 interface LogEntryFormatter {
-    String format(Object o);
+
+    /**
+     * @return {@code true} if any throwable should be included in the message payload in a `cause`
+     *     field, rather than passed to the underlying logging framework.
+     */
+    boolean causeInMessage();
+
+    /**
+     * Called to format a log entry.
+     *
+     * @param logEntry the log entry to format.
+     * @return the formatted data.
+     */
+    String format(Map<String, ?> logEntry);
 }

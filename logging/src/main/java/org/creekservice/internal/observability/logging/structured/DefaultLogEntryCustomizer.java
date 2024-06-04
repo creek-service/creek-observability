@@ -23,9 +23,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import org.creekservice.api.observability.logging.structured.LogEntryCustomizer;
 
 /** Default impl of the {@link LogEntryCustomizer} type. */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
 
     /** Standard fields */
@@ -36,7 +38,8 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
 
     private final Map<String, Object> metrics = new HashMap<>();
     private final Map<String, DefaultLogEntryCustomizer> namespaces = new HashMap<>();
-    private final Throwable[] throwable;
+    private final AtomicReference<Throwable> globalThrowable;
+    private Optional<Throwable> throwable = Optional.empty();
 
     /**
      * Factory method
@@ -46,11 +49,12 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
      */
     public static DefaultLogEntryCustomizer create(final String messageText) {
         return (DefaultLogEntryCustomizer)
-                new DefaultLogEntryCustomizer(new Throwable[1]).with(Field.message, messageText);
+                new DefaultLogEntryCustomizer(new AtomicReference<>())
+                        .with(Field.message, messageText);
     }
 
-    private DefaultLogEntryCustomizer(final Throwable[] throwable) {
-        this.throwable = requireNonNull(throwable, "throwable");
+    private DefaultLogEntryCustomizer(final AtomicReference<Throwable> globalThrowable) {
+        this.globalThrowable = requireNonNull(globalThrowable, "globalThrowable");
     }
 
     @Override
@@ -61,7 +65,7 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
         }
         return namespaces.computeIfAbsent(
                 requireNonBlank(namespace, "namespace"),
-                k -> new DefaultLogEntryCustomizer(throwable));
+                k -> new DefaultLogEntryCustomizer(globalThrowable));
     }
 
     @Override
@@ -82,22 +86,29 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
 
     @Override
     public LogEntryCustomizer withThrowable(final Throwable t) {
-        if (throwable[0] != null) {
-            throw new UnsupportedOperationException("Exception already set", throwable[0]);
+        if (globalThrowable.get() != null) {
+            throw new UnsupportedOperationException("Exception already set", globalThrowable.get());
         }
 
-        throwable[0] = t;
+        globalThrowable.set(t);
+        throwable = Optional.of(t);
         return this;
     }
 
     /**
      * Build the log entry
      *
+     * @param includeThrowables indicates if any exceptions registered vis {@link
+     *     #withThrowable(Throwable)} should be included in the message or not.
      * @return the structured log entry
      */
-    public Map<String, Object> build() {
+    public Map<String, Object> build(final boolean includeThrowables) {
         final Map<String, Object> result = new HashMap<>(metrics);
-        namespaces.forEach((name, customizer) -> result.put(name, customizer.build()));
+        if (includeThrowables) {
+            throwable.ifPresent(t -> result.put("cause", t));
+        }
+        namespaces.forEach(
+                (name, customizer) -> result.put(name, customizer.build(includeThrowables)));
         removeNullValues(result);
         return result.isEmpty() ? null : result;
     }
@@ -106,7 +117,7 @@ public final class DefaultLogEntryCustomizer implements LogEntryCustomizer {
      * @return any throwable set.
      */
     public Optional<Throwable> throwable() {
-        return Optional.ofNullable(throwable[0]);
+        return Optional.ofNullable(globalThrowable.get());
     }
 
     private static void removeNullValues(final Map<String, Object> m) {

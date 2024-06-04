@@ -32,7 +32,7 @@ dependencies {
     testImplementation("com.github.spotbugs:spotbugs-annotations:$spotBugsVersion")
 
     // Required by Log4j when using JsonLayout:
-    testRuntimeOnly("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     // Required by Log4j when using XmlLayout:
     testRuntimeOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
 }

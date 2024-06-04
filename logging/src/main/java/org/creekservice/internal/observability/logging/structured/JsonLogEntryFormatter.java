@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import org.creekservice.api.base.annotation.VisibleForTesting;
+import org.creekservice.api.base.type.Throwables;
 import org.creekservice.api.base.type.config.SystemProperties;
 import org.creekservice.api.base.type.json.Json;
 
@@ -52,6 +54,7 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
                     new SimpleHandler<>(Long.class, (sb, o) -> sb.append((long) o)),
                     new SimpleHandler<>(Number.class, JsonLogEntryFormatter::formatNumber),
                     new SimpleHandler<>(Boolean.class, (sb, o) -> sb.append((boolean) o)),
+                    new SimpleHandler<>(Throwable.class, JsonLogEntryFormatter::formatThrowable),
                     new ContainerHandler<>(
                             Collection.class, JsonLogEntryFormatter::formatCollection),
                     new ContainerHandler<>(Map.class, JsonLogEntryFormatter::formatMap),
@@ -74,7 +77,17 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
     }
 
     @Override
-    public String format(final Object o) {
+    public boolean causeInMessage() {
+        return true;
+    }
+
+    @Override
+    public String format(final Map<String, ?> o) {
+        return formatInternal(o);
+    }
+
+    @VisibleForTesting
+    String formatInternal(final Object o) {
         final StringBuilder sb = new StringBuilder();
         format(sb, o, 0, maxDepth);
         return sb.toString();
@@ -109,6 +122,10 @@ final class JsonLogEntryFormatter implements LogEntryFormatter {
         } else {
             sb.append(doubleValue);
         }
+    }
+
+    private static void formatThrowable(final StringBuilder sb, final Throwable throwable) {
+        formatString(sb, Throwables.stackTrace(throwable));
     }
 
     private static void formatCollection(

@@ -82,8 +82,10 @@ public final class Slf4jStructuredLogger implements StructuredLogger {
         final DefaultLogEntryCustomizer customizer = customizerFactory.apply(message);
         customizeConsumer.accept(rootNs.map(customizer::ns).orElse(customizer));
 
-        slf4jLevel.log(
-                logger, formatter.format(customizer.build()), customizer.throwable().orElse(null));
+        final boolean causeInMsg = formatter.causeInMessage();
+        final Throwable cause = causeInMsg ? null : customizer.throwable().orElse(null);
+
+        slf4jLevel.log(logger, formatter.format(customizer.build(causeInMsg)), cause);
     }
 
     private interface EnabledMethod {

@@ -22,6 +22,7 @@ import static org.creekservice.api.observability.logging.structured.Level.INFO;
 import static org.creekservice.api.observability.logging.structured.Level.TRACE;
 import static org.creekservice.api.observability.logging.structured.Level.WARN;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -67,7 +68,7 @@ class Slf4jStructuredLoggerTest {
                         slf4jLogger, Optional.empty(), customizerFactory, formatter);
 
         when(customizerFactory.apply(any())).thenReturn(customizer);
-        when(customizer.build()).thenReturn(LOG_STATE);
+        when(customizer.build(anyBoolean())).thenReturn(LOG_STATE);
         when(formatter.format(any())).thenReturn(LOG_LINE);
     }
 

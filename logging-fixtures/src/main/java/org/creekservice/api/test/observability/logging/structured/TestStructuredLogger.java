@@ -75,7 +75,7 @@ public final class TestStructuredLogger implements StructuredLogger {
         final DefaultLogEntryCustomizer customizer = DefaultLogEntryCustomizer.create(message);
         customizeConsumer.accept(customizer);
 
-        entries.add(logEntry(level, customizer.build(), customizer.throwable()));
+        entries.add(logEntry(level, customizer.build(false), customizer.throwable()));
     }
 
     /**
