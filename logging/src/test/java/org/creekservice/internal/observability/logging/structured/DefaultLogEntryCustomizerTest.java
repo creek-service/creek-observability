@@ -40,7 +40,7 @@ class DefaultLogEntryCustomizerTest {
 
     @Test
     void shouldSetMessage() {
-        assertThat(customizer.build(), is(Map.of("message", "log message")));
+        assertThat(customizer.build(false), is(Map.of("message", "log message")));
     }
 
     @Test
@@ -49,7 +49,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.with("key", 10);
 
         // Then:
-        assertThat(customizer.build(), hasEntry("key", 10));
+        assertThat(customizer.build(false), hasEntry("key", 10));
     }
 
     @Test
@@ -58,7 +58,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.with(MetricName.someMetric, 10);
 
         // Then:
-        assertThat(customizer.build(), hasEntry("someMetric", 10));
+        assertThat(customizer.build(false), hasEntry("someMetric", 10));
     }
 
     @Test
@@ -82,7 +82,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.with("key", null);
 
         // Then:
-        assertThat(customizer.build(), not(hasKey("key")));
+        assertThat(customizer.build(false), not(hasKey("key")));
     }
 
     @Test
@@ -91,7 +91,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.with(MetricName.someMetric, null);
 
         // Then:
-        assertThat(customizer.build(), not(hasKey("testKey")));
+        assertThat(customizer.build(false), not(hasKey("testKey")));
     }
 
     @Test
@@ -160,6 +160,43 @@ class DefaultLogEntryCustomizerTest {
     }
 
     @Test
+    void shouldBuildThrowableInMessage() {
+        // Given:
+        customizer.withThrowable(THROWABLE);
+
+        // When:
+        final Map<String, Object> msg = customizer.build(true);
+
+        // Then:
+        assertThat(msg, hasEntry("cause", THROWABLE));
+    }
+
+    @Test
+    void shouldBuildThrowableInNestedMessage() {
+        // Given:
+        customizer.ns("ns").withThrowable(THROWABLE);
+
+        // When:
+        final Map<String, Object> msg = customizer.build(true);
+
+        // Then:
+        assertThat(msg, not(hasKey("cause")));
+        assertThat(msg, hasEntry("ns", Map.of("cause", THROWABLE)));
+    }
+
+    @Test
+    void shouldBuildThrowableNotInMessage() {
+        // Given:
+        customizer.withThrowable(THROWABLE);
+
+        // When:
+        final Map<String, Object> msg = customizer.build(false);
+
+        // Then:
+        assertThat(msg, not(hasKey("cause")));
+    }
+
+    @Test
     void shouldThrowOnInvalidNamespace() {
         assertThrows(NullPointerException.class, () -> customizer.ns((String) null));
         assertThrows(IllegalArgumentException.class, () -> customizer.ns("\t"));
@@ -225,8 +262,8 @@ class DefaultLogEntryCustomizerTest {
         customizer.with("a", 10).ns("b").with("a", 22);
 
         // Then:
-        assertThat(customizer.build(), hasEntry("a", 10));
-        assertThat(customizer.build(), hasEntry("b", Map.of("a", 22)));
+        assertThat(customizer.build(false), hasEntry("a", 10));
+        assertThat(customizer.build(false), hasEntry("b", Map.of("a", 22)));
     }
 
     @Test
@@ -235,7 +272,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.ns("empty");
 
         // Then:
-        assertThat(customizer.build(), not(hasKey("empty")));
+        assertThat(customizer.build(false), not(hasKey("empty")));
     }
 
     @Test
@@ -247,7 +284,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.ns("ns").with("b", 20);
 
         // Then:
-        assertThat(customizer.build(), hasEntry("ns", Map.of("a", 10, "b", 20)));
+        assertThat(customizer.build(false), hasEntry("ns", Map.of("a", 10, "b", 20)));
     }
 
     @Test
@@ -256,7 +293,7 @@ class DefaultLogEntryCustomizerTest {
         customizer.ns(Namespace.someNs).with("a", 10);
 
         // Then:
-        assertThat(customizer.build(), hasEntry("someNs", Map.of("a", 10)));
+        assertThat(customizer.build(false), hasEntry("someNs", Map.of("a", 10)));
     }
 
     private enum MetricName {
