@@ -1,8 +1,8 @@
 --add-modules
-  org.junitpioneer,org.hamcrest,guava.testlib,creek.test.util,creek.test.hamcrest,creek.test.conformity,com.fasterxml.jackson.databind
+  org.junitpioneer,org.hamcrest,com.google.common.testlib,creek.test.util,creek.test.hamcrest,creek.test.conformity,com.fasterxml.jackson.databind
 
 --add-reads
-  creek.observability.logging=org.junitpioneer,org.hamcrest,guava.testlib,creek.test.util,creek.test.hamcrest,creek.test.conformity,com.fasterxml.jackson.databind
+  creek.observability.logging=org.junitpioneer,org.hamcrest,com.google.common.testlib,creek.test.util,creek.test.hamcrest,creek.test.conformity,com.fasterxml.jackson.databind
 
 --add-opens
   org.junitpioneer/org.junitpioneer.jupiter=org.junit.platform.commons
