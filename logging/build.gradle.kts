@@ -36,5 +36,5 @@ dependencies {
     // Required by Log4j when using JsonLayout (Log4j2 requires Jackson 2):
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.22.1")
     // Required by Log4j when using XmlLayout (Log4j2 requires Jackson 2):
-    testRuntimeOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.1")
+    testRuntimeOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.22.2")
 }
