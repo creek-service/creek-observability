@@ -19,19 +19,16 @@ plugins {
 }
 
 val creekVersion : String by extra
-val slf4jVersion = project.property("slf4jVersion") as String
-val jacksonVersion = project.property("jacksonVersion") as String
-val spotBugsVersion = project.property("spotBugsVersion") as String
 
 dependencies {
     implementation("org.creekservice:creek-base-annotation:$creekVersion")
     implementation("org.creekservice:creek-base-type:$creekVersion")
 
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("org.slf4j:slf4j-api:${property("slf4jVersion")}")
 
-    testImplementation("com.github.spotbugs:spotbugs-annotations:$spotBugsVersion")
+    testImplementation("com.github.spotbugs:spotbugs-annotations:${property("spotBugsVersion")}")
 
-    testImplementation("tools.jackson.core:jackson-databind:$jacksonVersion")
+    testImplementation("tools.jackson.core:jackson-databind:${property("jacksonVersion")}")
 
     // Required by Log4j when using JsonLayout (Log4j2 requires Jackson 2):
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.22.2")
