@@ -19,9 +19,9 @@ plugins {
 }
 
 val creekVersion : String by extra
-val slf4jVersion : String by project
-val jacksonVersion : String by project
-val spotBugsVersion : String by project
+val slf4jVersion = project.property("slf4jVersion") as String
+val jacksonVersion = project.property("jacksonVersion") as String
+val spotBugsVersion = project.property("spotBugsVersion") as String
 
 dependencies {
     implementation("org.creekservice:creek-base-annotation:$creekVersion")
